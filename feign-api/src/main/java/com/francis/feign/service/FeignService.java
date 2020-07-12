@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @description:
  * @date: 2020/7/12 20:11
  */
-@FeignClient(value = "user-api", path = "user-api")
+@FeignClient(value = "user-api", path = "user-api", fallbackFactory = FeignServiceHystrix.class)
 public interface FeignService {
 
     @RequestMapping(value = "/user/info", method = RequestMethod.GET)
-    ResponseJson<User> queryUserInfoById(@RequestParam("userId") String userId);
+    ResponseJson<User> queryUserById(@RequestParam("userId") String userId);
 }

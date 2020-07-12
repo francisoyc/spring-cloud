@@ -21,7 +21,7 @@ public class FeignController {
 
     @GetMapping(value = "/user/info/{userId}", produces = "application/json")
     public String queryUserInfoById(@PathVariable("userId") String userId) {
-        final ResponseJson<User> userResponseJson = service.queryUserInfoById(userId);
+        final ResponseJson<User> userResponseJson = service.queryUserById(userId);
         if (userResponseJson != null) {
             final User user = userResponseJson.getData();
             return "User name is " + user.getUserName() + ", age is " + user.getAge() + ", phone is " + user.getPhone();
