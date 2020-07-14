@@ -8,6 +8,7 @@ import com.francis.ribbon.service.RibbonService;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -24,11 +25,14 @@ public class RibbonServiceImpl implements RibbonService {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Value("${api.user.serviceName}")
+    private String userApiServiceName;
+
     @HystrixCommand(fallbackMethod = "queryUserByIdFallback", ignoreExceptions = NullPointerException.class)
     @Override
     public String queryUserById(String userId) {
-        final ResponseEntity<ResponseJson> entity
-                = restTemplate.getForEntity("http://USER-API/user-api/user/info?userId=" + userId, ResponseJson.class);
+        final ResponseEntity<ResponseJson> entity = restTemplate.getForEntity(
+                "http://" + userApiServiceName + "/user-api/user/info?userId=" + userId, ResponseJson.class);
         if (entity.getStatusCode().equals(HttpStatus.OK)) {
             final User user =  JSONObject.toJavaObject((JSON) JSONObject.toJSON(entity.getBody().getData()), User.class);
             return "User name is " + user.getUserName() + ", age is " + user.getAge() + ", phone is " + user.getPhone();
