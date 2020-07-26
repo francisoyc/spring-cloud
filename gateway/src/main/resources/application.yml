@@ -5,5 +5,35 @@ spring:
     name: gateway
   cloud:
     gateway:
+      discovery:
+        locator:
+          # 为 true 时代表gateway开启服务注册和发现的功能，并且spring cloud gateway自动根据服务发现为每一个服务创建了一个router，
+          # 这个router将以服务名开头的请求路径转发到对应的服务。如果不改成false，下面这种形式也可转发到user-api的服务上
+          # curl -H "token:123456" http://localhost:8086/user-api/user-api/user/info?userId=666
+          enabled: false
+          lower-case-service-id: true
       routes:
-        - id: ribbon-api
+      - id: ribbon
+        uri: lb://user-api
+       # 拦截以/ribbon-api/user-api/开头的路径
+        predicates:
+        - Path=/ribbon-api/**
+        filters:
+        - StripPrefix=1
+      - id: feign
+        uri: lb://user-api
+        predicates:
+          - Path=/feign-api/**
+        filters:
+        # 截取路径，如：feign-api/user-api/user/info?userId=123456 转发时被截取成：/user-api/user/info?userId=123456
+        - StripPrefix=1
+
+eureka:
+  client:
+    service-url:
+      defalutZone: http://localhost:8761/eureka/
+  instance:
+    instance-id: gateway-8086
+    prefer-ip-address: true
+
+# curl -H "token:123456" http://localhost:8086/ribbon-api/user-api/user/info?userId=123456
