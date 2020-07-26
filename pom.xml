@@ -23,6 +23,7 @@
         <module>spring-cloud-config</module>
         <module>turbine</module>
         <module>gateway</module>
+        <module>admin-server</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>
