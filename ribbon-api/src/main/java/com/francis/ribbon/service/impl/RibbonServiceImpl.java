@@ -32,7 +32,7 @@ public class RibbonServiceImpl implements RibbonService {
     @Override
     public String queryUserById(String userId) {
         final ResponseEntity<ResponseJson> entity = restTemplate.getForEntity(
-                "http://" + userApiServiceName + "/user-api/user/info?userId=" + userId, ResponseJson.class);
+                "http://" + userApiServiceName + "/user-api/user/info/" + userId, ResponseJson.class);
         if (entity.getStatusCode().equals(HttpStatus.OK)) {
             final User user =  JSONObject.toJavaObject((JSON) JSONObject.toJSON(entity.getBody().getData()), User.class);
             return "User name is " + user.getUserName() + ", age is " + user.getAge() + ", phone is " + user.getPhone();
