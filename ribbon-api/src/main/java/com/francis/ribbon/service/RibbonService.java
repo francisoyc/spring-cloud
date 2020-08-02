@@ -7,4 +7,6 @@ package com.francis.ribbon.service;
  */
 public interface RibbonService {
     String queryUserById(String userId);
+
+    String queryAuthById(String userId);
 }

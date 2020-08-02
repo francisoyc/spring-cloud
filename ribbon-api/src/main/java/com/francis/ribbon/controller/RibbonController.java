@@ -34,4 +34,10 @@ public class RibbonController {
     public List<ServiceInstance> showInfo() {
         return discoveryClient.getInstances("ribbon-api");
     }
+
+    @GetMapping(value = "/auth/info/{userId}", produces = "application/json")
+    public String queryAuthById(@PathVariable("userId") String userId) {
+        return service.queryAuthById(userId);
+    }
+
 }

@@ -40,8 +40,17 @@ public class RibbonServiceImpl implements RibbonService {
         return "no user info";
     }
 
+    @Override
+    public String queryAuthById(String userId) {
+        final ResponseEntity<String> responseEntity = restTemplate.getForEntity(
+                "http://auth-api/auth/" + userId, String.class);
+        return responseEntity.getBody();
+    }
+
     public String queryUserByIdFallback(String userId, Throwable throwable) {
         log.error("ribbon-api queryUserById fallback, reason: ", throwable);
         return "sorry, cannot get a right result for " + userId;
     }
+
+
 }
