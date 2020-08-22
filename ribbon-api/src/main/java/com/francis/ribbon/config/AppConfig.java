@@ -14,7 +14,7 @@ import org.springframework.web.client.RestTemplate;
  */
 @Configuration
 // 通过这种方式指定user-api的负载均衡略
-@RibbonClient(name = "user-api", configuration = RibbonConfiguration.class)
+// @RibbonClient(name = "user-api", configuration = RibbonConfiguration.class)
 public class AppConfig {
 
     @Bean

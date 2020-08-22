@@ -7,10 +7,10 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * @author: francis
- * @description: 自定义ribbon配置类
+ * @description: 自定义ribbon配置类，只对user-api生效
  * @date: 2020/8/2 17:06
  */
-// 这个类不能放在com.francis.ribbon下，否则会被@ComponentScan扫描到，从而成为全局配置
+// 这个类不能放在com.francis.ribbon下，否则会被@ComponentScan扫描到，从而成为全局配置，或者将@Configuration注释掉
 @Configuration
 public class RibbonConfiguration {
 

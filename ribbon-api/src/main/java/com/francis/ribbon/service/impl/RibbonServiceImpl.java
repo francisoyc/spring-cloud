@@ -2,10 +2,11 @@ package com.francis.ribbon.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.francis.ribbon.entity.ResponseJson;
+import com.francis.common.res.ResponseJson;
 import com.francis.ribbon.entity.User;
 import com.francis.ribbon.service.RibbonService;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,9 +29,18 @@ public class RibbonServiceImpl implements RibbonService {
     @Value("${api.user.serviceName}")
     private String userApiServiceName;
 
-    @HystrixCommand(fallbackMethod = "queryUserByIdFallback", ignoreExceptions = NullPointerException.class)
+    @HystrixCommand(
+            fallbackMethod = "queryUserByIdFallback",
+            ignoreExceptions = NullPointerException.class,
+            commandKey = "ribbon-queryUserById", groupKey = "ribbon",
+            commandProperties = {
+                @HystrixProperty(name = "execution.isolation.strategy", value = "SEMAPHORE"),
+                @HystrixProperty(name = "execution.isolation.semaphore.maxConcurrentRequests", value = "100")
+            }
+    )
     @Override
     public String queryUserById(String userId) {
+        System.out.println(Thread.currentThread().getName() + "========" + userId);
         final ResponseEntity<ResponseJson> entity = restTemplate.getForEntity(
                 "http://" + userApiServiceName + "/user-api/user/info/" + userId, ResponseJson.class);
         if (entity.getStatusCode().equals(HttpStatus.OK)) {

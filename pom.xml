@@ -25,6 +25,7 @@
         <module>gateway</module>
         <module>admin-server</module>
         <module>auth-api</module>
+        <module>common</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>

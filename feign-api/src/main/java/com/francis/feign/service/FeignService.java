@@ -1,12 +1,11 @@
 package com.francis.feign.service;
 
-import com.francis.feign.entity.ResponseJson;
+import com.francis.common.res.ResponseJson;
 import com.francis.feign.entity.User;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author: francis

@@ -1,4 +1,4 @@
-package com.francis.ribbon.entity;
+package com.francis.common.res;
 
 import lombok.Data;
 

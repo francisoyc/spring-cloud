@@ -1,6 +1,6 @@
 package com.francis.feign.service;
 
-import com.francis.feign.entity.ResponseJson;
+import com.francis.common.res.ResponseJson;
 import com.francis.feign.entity.User;
 import feign.hystrix.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;

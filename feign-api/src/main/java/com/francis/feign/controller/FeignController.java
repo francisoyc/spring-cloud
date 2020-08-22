@@ -1,6 +1,6 @@
 package com.francis.feign.controller;
 
-import com.francis.feign.entity.ResponseJson;
+import com.francis.common.res.ResponseJson;
 import com.francis.feign.entity.User;
 import com.francis.feign.service.FeignService;
 import org.springframework.beans.factory.annotation.Autowired;
